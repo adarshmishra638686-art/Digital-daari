@@ -37,7 +37,7 @@ export default function Footer() {
             <img
               src="/manus-storage/digitaldaari-logo_34db3240.png"
               alt="Digitaldaari"
-              className="h-12 w-auto mb-4"
+              className="h-12 w-auto mb-4" style={{backgroundColor: '#ffffff', borderRadius: '5px', borderWidth: '3px'}}
             />
             <p className="text-slate-400 text-sm leading-relaxed font-['DM_Sans'] mb-6">
               We are a premium digital marketing and creative agency helping local businesses, startups, and personal brands grow online with data-driven strategies.

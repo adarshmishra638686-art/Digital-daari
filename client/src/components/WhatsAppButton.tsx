@@ -5,7 +5,7 @@
 export default function WhatsAppButton() {
   return (
     <a
-      href="https://wa.me/919876543210?text=Hi%20Digitaldaari!%20I%20am%20interested%20in%20your%20digital%20marketing%20services."
+      href="https://wa.link/qgr50h"
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 group"

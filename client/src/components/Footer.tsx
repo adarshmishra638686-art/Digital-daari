@@ -107,13 +107,13 @@ export default function Footer() {
             </h4>
             <ul className="space-y-4">
               <li>
-                <a href="tel:+919876543210" className="flex items-start gap-3 text-slate-400 hover:text-[#00AEEF] transition-colors group">
+                <a href="tel:+919956138641" className="flex items-start gap-3 text-slate-400 hover:text-[#00AEEF] transition-colors group">
                   <div className="service-icon-wrap w-9 h-9 mt-0.5 flex-shrink-0">
                     <Phone size={14} className="text-[#00AEEF]" />
                   </div>
                   <div>
                     <p className="text-xs text-slate-500 font-['DM_Sans'] mb-0.5">Call Us</p>
-                    <p className="text-sm font-medium font-['DM_Sans']">+91 98765 43210</p>
+                    <p className="text-sm font-medium font-['DM_Sans']">+91 9956138641</p>
                   </div>
                 </a>
               </li>
@@ -135,7 +135,7 @@ export default function Footer() {
                   </div>
                   <div>
                     <p className="text-xs text-slate-500 font-['DM_Sans'] mb-0.5">Location</p>
-                    <p className="text-sm font-medium font-['DM_Sans']">India</p>
+                    <p className="text-sm font-medium font-['DM_Sans']">Delhi</p>
                   </div>
                 </div>
               </li>

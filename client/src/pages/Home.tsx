@@ -178,7 +178,7 @@ export default function Home() {
                 </button>
               </Link>
               <a
-                href="https://wa.me/919876543210?text=Hi%20Digitaldaari!%20I%20want%20a%20free%20audit."
+                href="https://wa.link/qgr50h"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.15)] text-white font-bold text-base px-8 py-4 rounded-xl font-['Montserrat'] tracking-wide hover:bg-[rgba(255,255,255,0.1)] hover:border-[rgba(0,174,239,0.4)] transition-all duration-300"
@@ -397,7 +397,7 @@ export default function Home() {
               </button>
             </Link>
             <a
-              href="https://wa.me/919876543210"
+              href="https://wa.link/qgr50h"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 bg-[#25D366] text-white font-black text-lg px-10 py-5 rounded-xl font-['Montserrat'] tracking-wide hover:bg-[#22C55E] hover:scale-105 transition-all duration-300"

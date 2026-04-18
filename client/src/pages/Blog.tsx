@@ -446,7 +446,7 @@ export default function Blog() {
               </button>
             </Link>
             <a
-              href="https://wa.me/919876543210"
+              href="https://wa.link/qgr50h"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#25D366] text-white font-black text-base px-8 py-4 rounded-xl font-['Montserrat'] tracking-wide hover:bg-[#22C55E] transition-all duration-300"

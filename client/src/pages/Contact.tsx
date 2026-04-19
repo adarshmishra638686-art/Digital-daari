@@ -104,7 +104,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-slate-400 text-xs font-['DM_Sans'] mb-0.5">Call Us Directly</p>
-                    <p className="text-white font-bold font-['Montserrat']">+91 98765 43210</p>
+                    <p className="text-white font-bold font-['Montserrat']">+91 9956138641</p>
                     <p className="text-slate-500 text-xs font-['DM_Sans']">Mon-Sat, 9am-7pm IST</p>
                   </div>
                 </div>

@@ -112,3 +112,29 @@ export const blogSchedule = mysqlTable("blog_schedule", {
 
 export type BlogSchedule = typeof blogSchedule.$inferSelect;
 export type InsertBlogSchedule = typeof blogSchedule.$inferInsert;
+
+/**
+ * Blog categories for organizing posts.
+ */
+export const blogCategories = mysqlTable("blog_categories", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 100 }).notNull().unique(),
+  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  description: text("description"),
+  color: varchar("color", { length: 7 }).default("#00AEEF").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type BlogCategory = typeof blogCategories.$inferSelect;
+export type InsertBlogCategory = typeof blogCategories.$inferInsert;
+
+/**
+ * Junction table for blog post categories (many-to-many relationship).
+ */
+export const postCategories = mysqlTable("post_categories", {
+  postId: int("postId").notNull(),
+  categoryId: int("categoryId").notNull(),
+});
+
+export type PostCategory = typeof postCategories.$inferSelect;
+export type InsertPostCategory = typeof postCategories.$inferInsert;

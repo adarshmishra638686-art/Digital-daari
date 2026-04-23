@@ -19,6 +19,7 @@ import CaseStudies from "./pages/CaseStudies";
 import Blog from "./pages/Blog";
 import BlogAdmin from "./pages/BlogAdmin";
 import CMSDashboard from "./pages/CMSDashboard";
+import EnhancedCMS from "./pages/EnhancedCMS";
 import Contact from "./pages/Contact";
 import { useEffect } from "react";
 
@@ -44,6 +45,7 @@ function Router() {
         <Route path="/blog" component={Blog} />
         <Route path="/admin/blog" component={BlogAdmin} />
         <Route path="/admin/cms" component={CMSDashboard} />
+        <Route path="/admin/enhanced-cms" component={EnhancedCMS} />
         <Route path="/contact" component={Contact} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />

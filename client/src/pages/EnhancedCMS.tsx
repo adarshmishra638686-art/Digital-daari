@@ -247,17 +247,6 @@ export default function EnhancedCMS() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        {/* Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold">Blog CMS</h1>
-            <p className="text-slate-600">Manage your blog content, media, and categories</p>
-          </div>
-          <Button onClick={() => setShowNewPostDialog(true)} className="gap-2">
-            <Plus size={18} />
-            New Post
-          </Button>
-        </div>
 
         {/* Stats */}
         <div className="grid grid-cols-4 gap-4">

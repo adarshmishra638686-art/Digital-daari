@@ -172,31 +172,6 @@ export default function SimpleCMS() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <div className="bg-white border-b border-slate-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setLocation("/")}
-              className="gap-2"
-            >
-              <ArrowLeft size={18} />
-              Back
-            </Button>
-            <div>
-              <h1 className="text-2xl font-bold">Blog CMS</h1>
-              <p className="text-sm text-slate-600">Manage your blog posts</p>
-            </div>
-          </div>
-          <Button onClick={() => setShowNewPostDialog(true)} className="gap-2">
-            <Plus size={18} />
-            New Post
-          </Button>
-        </div>
-      </div>
-
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Posts Grid */}
@@ -274,11 +249,20 @@ export default function SimpleCMS() {
           ) : (
             <Card className="p-12 text-center">
               <p className="text-slate-600 text-lg">No blog posts yet</p>
-              <p className="text-slate-500 mt-2">Click "New Post" to create your first blog post</p>
+              <p className="text-slate-500 mt-2">Create your first blog post</p>
             </Card>
           )}
         </div>
       </div>
+
+      {/* Floating Action Button for New Post */}
+      <button
+        onClick={() => setShowNewPostDialog(true)}
+        className="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-lg transition-all"
+        title="New Post"
+      >
+        <Plus size={24} />
+      </button>
 
       {/* New/Edit Post Dialog */}
       <Dialog

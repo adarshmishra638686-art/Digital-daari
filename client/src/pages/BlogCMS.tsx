@@ -220,11 +220,11 @@ export default function BlogCMS() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-black via-slate-900 to-black py-8">
       <div className="max-w-7xl mx-auto px-6">
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-4 bg-slate-800 border-2 border-cyan-400">
             <TabsTrigger value="posts" className="gap-2">
               <FileText size={16} />
               Posts
@@ -248,26 +248,26 @@ export default function BlogCMS() {
             {/* Toolbar */}
             <div className="flex gap-4 items-center">
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-3 text-slate-400" size={18} />
+                <Search className="absolute left-3 top-3 text-cyan-400" size={18} />
                 <Input
                   placeholder="Search posts..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 bg-slate-800 border-2 border-cyan-400 text-white placeholder-cyan-300"
                 />
               </div>
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-40">
+                <SelectTrigger className="w-40 bg-slate-800 border-2 border-cyan-400 text-white">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-slate-800 border-2 border-cyan-400">
                   <SelectItem value="all">All Status</SelectItem>
                   <SelectItem value="draft">Drafts</SelectItem>
                   <SelectItem value="published">Published</SelectItem>
                   <SelectItem value="archived">Archived</SelectItem>
                 </SelectContent>
               </Select>
-              <Button onClick={() => setShowNewPostDialog(true)} className="gap-2">
+              <Button onClick={() => setShowNewPostDialog(true)} className="gap-2 bg-cyan-500 hover:bg-cyan-600 text-black font-bold border-2 border-cyan-400">
                 <Plus size={18} />
                 New Post
               </Button>
@@ -276,26 +276,26 @@ export default function BlogCMS() {
             {/* Posts Grid */}
             <div className="grid gap-4">
               {postsLoading ? (
-                <Card className="p-8 text-center">
-                  <p className="text-slate-600">Loading posts...</p>
+                <Card className="p-8 text-center bg-slate-800 border-2 border-cyan-400">
+                  <p className="text-cyan-300">Loading posts...</p>
                 </Card>
               ) : filteredPosts.length > 0 ? (
                 filteredPosts.map((post: any) => (
-                  <Card key={post.id} className="p-6 hover:shadow-lg transition-shadow">
+                  <Card key={post.id} className="p-6 bg-slate-800 border-2 border-cyan-400 hover:border-cyan-300 hover:shadow-lg hover:shadow-cyan-500/50 transition-all">
                     <div className="flex justify-between items-start gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-xl font-bold text-slate-900">{post.title}</h3>
+                          <h3 className="text-xl font-bold text-cyan-300">{post.title}</h3>
                           <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                            post.status === "published" ? "bg-green-100 text-green-800" :
-                            post.status === "draft" ? "bg-yellow-100 text-yellow-800" :
-                            "bg-slate-100 text-slate-800"
+                            post.status === "published" ? "bg-green-600 text-green-100" :
+                            post.status === "draft" ? "bg-yellow-600 text-yellow-100" :
+                            "bg-slate-600 text-slate-100"
                           }`}>
                             {post.status}
                           </span>
                         </div>
-                        <p className="text-slate-600 mb-3">{post.excerpt}</p>
-                        <div className="flex gap-4 text-sm text-slate-500">
+                        <p className="text-cyan-100 mb-3">{post.excerpt}</p>
+                        <div className="flex gap-4 text-sm text-cyan-200">
                           <span className="flex items-center gap-1">
                             <Eye size={14} />
                             {post.viewCount || 0} views

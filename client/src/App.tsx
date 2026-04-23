@@ -20,6 +20,7 @@ import Blog from "./pages/Blog";
 import BlogAdmin from "./pages/BlogAdmin";
 import CMSDashboard from "./pages/CMSDashboard";
 import EnhancedCMS from "./pages/EnhancedCMS";
+import SimpleCMS from "./pages/SimpleCMS";
 import Contact from "./pages/Contact";
 import { useEffect } from "react";
 
@@ -46,6 +47,7 @@ function Router() {
         <Route path="/admin/blog" component={BlogAdmin} />
         <Route path="/admin/cms" component={CMSDashboard} />
         <Route path="/admin/enhanced-cms" component={EnhancedCMS} />
+        <Route path="/admin/simple-cms" component={SimpleCMS} />
         <Route path="/contact" component={Contact} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />

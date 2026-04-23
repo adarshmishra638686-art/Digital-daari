@@ -63,3 +63,52 @@ export const blogPosts = mysqlTable("blog_posts", {
 
 export type BlogPost = typeof blogPosts.$inferSelect;
 export type InsertBlogPost = typeof blogPosts.$inferInsert;
+/**
+ * Media library table for managing uploaded images and files.
+ */
+export const mediaLibrary = mysqlTable("media_library", {
+  id: int("id").autoincrement().primaryKey(),
+  fileName: varchar("fileName", { length: 255 }).notNull(),
+  url: varchar("url", { length: 500 }).notNull(),
+  storageKey: varchar("storageKey", { length: 500 }).notNull(),
+  mimeType: varchar("mimeType", { length: 100 }).notNull(),
+  fileSize: int("fileSize").notNull(),
+  altText: text("altText"),
+  uploadedBy: int("uploadedBy").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type MediaFile = typeof mediaLibrary.$inferSelect;
+export type InsertMediaFile = typeof mediaLibrary.$inferInsert;
+
+/**
+ * Blog post revisions for version history.
+ */
+export const blogRevisions = mysqlTable("blog_revisions", {
+  id: int("id").autoincrement().primaryKey(),
+  postId: int("postId").notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  content: text("content").notNull(),
+  excerpt: text("excerpt"),
+  revisedBy: int("revisedBy").notNull(),
+  revisionMessage: text("revisionMessage"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type BlogRevision = typeof blogRevisions.$inferSelect;
+export type InsertBlogRevision = typeof blogRevisions.$inferInsert;
+
+/**
+ * Blog post scheduling for future publishing.
+ */
+export const blogSchedule = mysqlTable("blog_schedule", {
+  id: int("id").autoincrement().primaryKey(),
+  postId: int("postId").notNull(),
+  scheduledFor: timestamp("scheduledFor").notNull(),
+  status: mysqlEnum("status", ["pending", "published", "cancelled"]).default("pending").notNull(),
+  scheduledBy: int("scheduledBy").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type BlogSchedule = typeof blogSchedule.$inferSelect;
+export type InsertBlogSchedule = typeof blogSchedule.$inferInsert;

@@ -15,6 +15,13 @@
       "when": 1776872121066,
       "tag": "0001_gigantic_shriek",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1776929049278,
+      "tag": "0002_conscious_fallen_one",
+      "breakpoints": true
     }
   ]
 }

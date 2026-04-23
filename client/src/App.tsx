@@ -18,6 +18,7 @@ import Services from "./pages/Services";
 import CaseStudies from "./pages/CaseStudies";
 import Blog from "./pages/Blog";
 import BlogAdmin from "./pages/BlogAdmin";
+import CMSDashboard from "./pages/CMSDashboard";
 import Contact from "./pages/Contact";
 import { useEffect } from "react";
 
@@ -42,6 +43,7 @@ function Router() {
         <Route path="/case-studies" component={CaseStudies} />
         <Route path="/blog" component={Blog} />
         <Route path="/admin/blog" component={BlogAdmin} />
+        <Route path="/admin/cms" component={CMSDashboard} />
         <Route path="/contact" component={Contact} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />

@@ -10,6 +10,7 @@ import {
   ChevronRight, Phone, MessageCircle
 } from "lucide-react";
 import { useScrollAnimation, useCountUp } from "@/hooks/useScrollAnimation";
+import SocialProofCarousel from "@/components/SocialProofCarousel";
 
 // ---- Data ----
 const services = [
@@ -201,6 +202,17 @@ export default function Home() {
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
           <span className="text-slate-400 text-xs font-['DM_Sans']">Scroll to explore</span>
           <div className="w-px h-8 bg-gradient-to-b from-[#00AEEF] to-transparent" />
+        </div>
+      </section>
+
+      {/* ===== SOCIAL PROOF CAROUSEL ===== */}
+      <section style={{ background: "#06091A", padding: "60px 20px" }}>
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-black font-['Montserrat'] text-white mb-4">Trusted by 200+ Businesses</h2>
+            <p className="text-slate-400 text-lg font-['DM_Sans']">See what our clients have to say about their growth journey with Digitaldaari</p>
+          </div>
+          <SocialProofCarousel />
         </div>
       </section>
 

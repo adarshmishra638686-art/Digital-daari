@@ -10,7 +10,6 @@ import {
   ChevronRight, Phone, MessageCircle
 } from "lucide-react";
 import { useScrollAnimation, useCountUp } from "@/hooks/useScrollAnimation";
-import ProductionHero from "@/components/ProductionHero";
 
 // ---- Data ----
 const services = [
@@ -124,10 +123,86 @@ export default function Home() {
   return (
     <div className="min-h-screen" style={{ background: "#06091A" }}>
 
-      {/* ===== PRODUCTION HERO SECTION ===== */}
-      <ProductionHero />
+      {/* ===== HERO SECTION ===== */}
+      <section
+        className="relative min-h-screen flex items-center pt-28 overflow-hidden"
+        style={{
+          backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663571710539/2AKrWQ2ThXRHggBVBCqHwp/hero-bg-8SxTT79aV5ntSmzyUNCTpT.webp)`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        {/* Overlay */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(6,9,26,0.92) 0%, rgba(6,9,26,0.75) 50%, rgba(6,9,26,0.85) 100%)" }} />
 
+        {/* Glow orbs */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-10 blur-3xl" style={{ background: "radial-gradient(circle, #00AEEF, transparent)" }} />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full opacity-8 blur-3xl" style={{ background: "radial-gradient(circle, #0072BC, transparent)" }} />
 
+        <div className="container relative z-10 py-20">
+          <div className="max-w-4xl">
+            {/* Urgency badge */}
+            <div className="inline-flex items-center gap-2 mb-6">
+              <span className="badge-urgent">Limited Slots Available</span>
+              <span className="text-slate-400 text-sm font-['DM_Sans']">Only 5 new clients this month</span>
+            </div>
+
+            {/* Headline */}
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-black font-['Montserrat'] text-white leading-tight mb-6">
+              Grow Your Business<br />
+              <span className="gradient-text">10X Faster</span> With<br />
+              Digital Marketing
+            </h1>
+
+            {/* Subheadline */}
+            <p className="text-slate-300 text-lg md:text-xl font-['DM_Sans'] leading-relaxed mb-8 max-w-2xl">
+              We help local businesses, startups, and personal brands dominate online with proven SEO, stunning websites, viral social media, and high-converting ad campaigns.
+            </p>
+
+            {/* Trust indicators */}
+            <div className="flex flex-wrap items-center gap-4 mb-10">
+              {["200+ Happy Clients", "5★ Google Rating", "500% Avg. ROI"].map((item) => (
+                <div key={item} className="flex items-center gap-2">
+                  <CheckCircle size={16} className="text-[#00AEEF]" />
+                  <span className="text-slate-300 text-sm font-['DM_Sans']">{item}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/contact">
+                <button className="shimmer-btn text-white font-bold text-base px-8 py-4 rounded-xl font-['Montserrat'] tracking-wide hover:scale-105 hover:shadow-xl hover:shadow-[#00AEEF]/30 transition-all duration-300 flex items-center gap-2">
+                  Get Free Consultation
+                  <ArrowRight size={18} />
+                </button>
+              </Link>
+              <a
+                href="https://wa.link/qgr50h"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.15)] text-white font-bold text-base px-8 py-4 rounded-xl font-['Montserrat'] tracking-wide hover:bg-[rgba(255,255,255,0.1)] hover:border-[rgba(0,174,239,0.4)] transition-all duration-300"
+              >
+                <MessageCircle size={18} className="text-[#25D366]" />
+                Get Free Audit
+              </a>
+            </div>
+
+            {/* Lead magnet */}
+            <div className="mt-8 p-4 rounded-xl border border-[rgba(0,174,239,0.2)] bg-[rgba(0,174,239,0.05)] inline-block">
+              <p className="text-sm font-['DM_Sans'] text-slate-300">
+                <span className="text-[#00AEEF] font-bold">FREE for this week:</span> SEO Audit + Website Analysis + Custom Marketing Plan
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
+          <span className="text-slate-400 text-xs font-['DM_Sans']">Scroll to explore</span>
+          <div className="w-px h-8 bg-gradient-to-b from-[#00AEEF] to-transparent" />
+        </div>
+      </section>
 
       {/* ===== STATS BAND ===== */}
       <section style={{ background: "#0D1230", borderTop: "1px solid rgba(0,174,239,0.1)", borderBottom: "1px solid rgba(0,174,239,0.1)" }}>

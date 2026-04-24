@@ -10,7 +10,7 @@ import {
   ChevronRight, Phone, MessageCircle
 } from "lucide-react";
 import { useScrollAnimation, useCountUp } from "@/hooks/useScrollAnimation";
-import PremiumHero from "@/components/PremiumHero";
+import ProductionHero from "@/components/ProductionHero";
 
 // ---- Data ----
 const services = [
@@ -124,8 +124,8 @@ export default function Home() {
   return (
     <div className="min-h-screen" style={{ background: "#06091A" }}>
 
-      {/* ===== PREMIUM HERO SECTION ===== */}
-      <PremiumHero />
+      {/* ===== PRODUCTION HERO SECTION ===== */}
+      <ProductionHero />
 
 
 

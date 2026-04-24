@@ -143,8 +143,8 @@ export default function Home() {
           <div className="max-w-4xl">
             {/* Urgency badge */}
             <div className="inline-flex items-center gap-2 mb-6">
-              <span className="badge-urgent">Limited Slots Available</span>
-              <span className="text-slate-400 text-sm font-['DM_Sans']">Only 5 new clients this month</span>
+              <span className="badge-urgent">🤖 AI-Powered Digital Marketing</span>
+              <span className="text-slate-400 text-sm font-['DM_Sans']">Smart strategies that scale your business</span>
             </div>
 
             {/* Headline */}

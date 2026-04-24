@@ -220,11 +220,11 @@ export default function BlogCMS() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-slate-900 to-black py-8">
+    <div className="min-h-screen bg-black py-8">
       <div className="max-w-7xl mx-auto px-6">
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-slate-800 border-2 border-cyan-400">
+          <TabsList className="grid w-full grid-cols-4 bg-black border-2 border-gray-600">
             <TabsTrigger value="posts" className="gap-2">
               <FileText size={16} />
               Posts
@@ -248,26 +248,26 @@ export default function BlogCMS() {
             {/* Toolbar */}
             <div className="flex gap-4 items-center">
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-3 text-cyan-400" size={18} />
+                <Search className="absolute left-3 top-3 text-gray-400" size={18} />
                 <Input
                   placeholder="Search posts..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 bg-slate-800 border-2 border-cyan-400 text-white placeholder-cyan-300"
+                  className="pl-10 bg-black border-2 border-gray-600 text-white placeholder-gray-500"
                 />
               </div>
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-40 bg-slate-800 border-2 border-cyan-400 text-white">
+                <SelectTrigger className="w-40 bg-black border-2 border-gray-600 text-white">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-slate-800 border-2 border-cyan-400">
+                <SelectContent className="bg-black border-2 border-gray-600">
                   <SelectItem value="all">All Status</SelectItem>
                   <SelectItem value="draft">Drafts</SelectItem>
                   <SelectItem value="published">Published</SelectItem>
                   <SelectItem value="archived">Archived</SelectItem>
                 </SelectContent>
               </Select>
-              <Button onClick={() => setShowNewPostDialog(true)} className="gap-2 bg-cyan-500 hover:bg-cyan-600 text-black font-bold border-2 border-cyan-400">
+              <Button onClick={() => setShowNewPostDialog(true)} className="gap-2 bg-gray-800 hover:bg-gray-700 text-white font-bold border-2 border-gray-600">
                 <Plus size={18} />
                 New Post
               </Button>
@@ -276,26 +276,26 @@ export default function BlogCMS() {
             {/* Posts Grid */}
             <div className="grid gap-4">
               {postsLoading ? (
-                <Card className="p-8 text-center bg-slate-800 border-2 border-cyan-400">
-                  <p className="text-cyan-300">Loading posts...</p>
+                <Card className="p-8 text-center bg-black border-2 border-gray-600">
+                  <p className="text-gray-400">Loading posts...</p>
                 </Card>
               ) : filteredPosts.length > 0 ? (
                 filteredPosts.map((post: any) => (
-                  <Card key={post.id} className="p-6 bg-slate-800 border-2 border-cyan-400 hover:border-cyan-300 hover:shadow-lg hover:shadow-cyan-500/50 transition-all">
+                  <Card key={post.id} className="p-6 bg-black border-2 border-gray-600 hover:border-gray-500 hover:shadow-lg hover:shadow-gray-700/50 transition-all">
                     <div className="flex justify-between items-start gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-xl font-bold text-cyan-300">{post.title}</h3>
+                          <h3 className="text-xl font-bold text-white">{post.title}</h3>
                           <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                            post.status === "published" ? "bg-green-600 text-green-100" :
-                            post.status === "draft" ? "bg-yellow-600 text-yellow-100" :
-                            "bg-slate-600 text-slate-100"
+                            post.status === "published" ? "bg-green-900 text-green-300" :
+                            post.status === "draft" ? "bg-yellow-900 text-yellow-300" :
+                            "bg-gray-800 text-gray-300"
                           }`}>
                             {post.status}
                           </span>
                         </div>
-                        <p className="text-cyan-100 mb-3">{post.excerpt}</p>
-                        <div className="flex gap-4 text-sm text-cyan-200">
+                        <p className="text-gray-300 mb-3">{post.excerpt}</p>
+                        <div className="flex gap-4 text-sm text-gray-400">
                           <span className="flex items-center gap-1">
                             <Eye size={14} />
                             {post.viewCount || 0} views
@@ -337,8 +337,8 @@ export default function BlogCMS() {
                 ))
               ) : (
                 <Card className="p-12 text-center">
-                  <p className="text-slate-600 text-lg">No blog posts found</p>
-                  <p className="text-slate-500 mt-2">Create your first blog post to get started</p>
+                  <p className="text-gray-400 text-lg">No blog posts found</p>
+                  <p className="text-gray-500 mt-2">Create your first blog post to get started</p>
                 </Card>
               )}
             </div>
@@ -349,7 +349,7 @@ export default function BlogCMS() {
             <Card className="p-8 text-center">
               <ImageIcon size={48} className="mx-auto text-slate-400 mb-4" />
               <h3 className="text-xl font-bold text-slate-900 mb-2">Media Library</h3>
-              <p className="text-slate-600 mb-6">Upload and manage your blog images and media files</p>
+              <p className="text-gray-400 mb-6">Upload and manage your blog images and media files</p>
               <Button className="gap-2">
                 <Plus size={18} />
                 Upload Media
@@ -375,7 +375,7 @@ export default function BlogCMS() {
                   </Card>
                 ))
               ) : (
-                <Card className="p-8 text-center text-slate-600">
+                <Card className="p-8 text-center text-gray-400">
                   No categories yet. Create one to organize your posts.
                 </Card>
               )}
@@ -386,19 +386,19 @@ export default function BlogCMS() {
           <TabsContent value="analytics" className="space-y-6">
             <div className="grid grid-cols-4 gap-4">
               <Card className="p-6 bg-gradient-to-br from-blue-50 to-blue-100">
-                <div className="text-sm text-slate-600 mb-2">Total Posts</div>
+                <div className="text-sm text-gray-400 mb-2">Total Posts</div>
                 <div className="text-3xl font-bold text-blue-900">{posts.length}</div>
               </Card>
               <Card className="p-6 bg-gradient-to-br from-green-50 to-green-100">
-                <div className="text-sm text-slate-600 mb-2">Published</div>
+                <div className="text-sm text-gray-400 mb-2">Published</div>
                 <div className="text-3xl font-bold text-green-900">{publishedCount}</div>
               </Card>
               <Card className="p-6 bg-gradient-to-br from-yellow-50 to-yellow-100">
-                <div className="text-sm text-slate-600 mb-2">Drafts</div>
+                <div className="text-sm text-gray-400 mb-2">Drafts</div>
                 <div className="text-3xl font-bold text-yellow-900">{draftCount}</div>
               </Card>
               <Card className="p-6 bg-gradient-to-br from-purple-50 to-purple-100">
-                <div className="text-sm text-slate-600 mb-2">Total Views</div>
+                <div className="text-sm text-gray-400 mb-2">Total Views</div>
                 <div className="text-3xl font-bold text-purple-900">{totalViews}</div>
               </Card>
             </div>
@@ -410,15 +410,15 @@ export default function BlogCMS() {
               </h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center pb-4 border-b">
-                  <span className="text-slate-600">Average Views per Post</span>
+                  <span className="text-gray-400">Average Views per Post</span>
                   <span className="text-2xl font-bold text-slate-900">{avgViews}</span>
                 </div>
                 <div className="flex justify-between items-center pb-4 border-b">
-                  <span className="text-slate-600">Total Blog Views</span>
+                  <span className="text-gray-400">Total Blog Views</span>
                   <span className="text-2xl font-bold text-slate-900">{totalViews}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-600">Publishing Rate</span>
+                  <span className="text-gray-400">Publishing Rate</span>
                   <span className="text-2xl font-bold text-slate-900">{publishedCount}/{posts.length}</span>
                 </div>
               </div>

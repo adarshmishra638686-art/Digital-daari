@@ -35,7 +35,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <img
-              src="/manus-storage/digitaldaari-logo_34db3240.png"
+              src="/Asset%2016@2000x.png"
               alt="Digitaldaari"
               className="h-12 w-auto mb-4" style={{backgroundColor: '#ffffff', borderRadius: '5px', borderWidth: '3px'}}
             />

@@ -54,10 +54,10 @@ export default function Navbar() {
           <Link href="/">
             <div className="flex items-center gap-2">
               <img
-                src="/manus-storage/digitaldaari-logo_34db3240.png"
+                src="/Asset%2016@2000x.png"
                 alt="Digitaldaari Logo"
                 className="h-10 md:h-12 w-auto object-contain max-w-[200px]"
-                style={{ filter: "drop-shadow(0 0 8px rgba(0,174,239,0.3))", backgroundColor: '#ffffff', borderRadius: '5px', borderWidth: '3px' }}
+                style={{ filter: "drop-shadow(0 0 8px rgba(0,174,239,0.3))", backgroundColor: "#ffffff", borderRadius: "5px", borderWidth: "3px" }}
               />
             </div>
           </Link>

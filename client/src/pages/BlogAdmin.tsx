@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,14 +28,98 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Pencil, Trash2, Plus, Search } from "lucide-react";
+import {
+  Pencil,
+  Trash2,
+  Plus,
+  Search,
+  Layout,
+  Wrench,
+  BarChart3,
+  MousePointerClick,
+  Copy,
+} from "lucide-react";
 import { toast } from "sonner";
 
+type PromptCategory = "UI" | "Feature" | "Data" | "UX";
+
+type PromptCard = {
+  category: PromptCategory;
+  title: string;
+  prompt: string;
+};
+
+const categoryMeta: Record<
+  PromptCategory,
+  { description: string; icon: typeof Layout }
+> = {
+  UI: {
+    description: "Visual layout and design changes",
+    icon: Layout,
+  },
+  Feature: {
+    description: "Functional additions with working logic",
+    icon: Wrench,
+  },
+  Data: {
+    description: "Charts, analytics, and data display",
+    icon: BarChart3,
+  },
+  UX: {
+    description: "Interaction and usability improvements",
+    icon: MousePointerClick,
+  },
+};
+
+const promptCards: PromptCard[] = [
+  {
+    category: "UI",
+    title: "Modernize Blog Dashboard Layout",
+    prompt:
+      "Redesign the blog admin dashboard UI with a cleaner card layout, improved spacing, and responsive behavior for mobile and desktop while keeping the current data and actions intact.",
+  },
+  {
+    category: "Feature",
+    title: "Add Rich Post Editor",
+    prompt:
+      "Add a rich text blog post editor to Blog Admin with toolbar controls for headings, lists, links, and image embeds, and ensure the content saves through existing create/update flows.",
+  },
+  {
+    category: "Data",
+    title: "Add Performance Analytics Panel",
+    prompt:
+      "Add a blog analytics panel showing monthly views, top posts, and publishing trends with simple charts using existing post data and mocked traffic metrics where needed.",
+  },
+  {
+    category: "UX",
+    title: "Improve Table Filtering Experience",
+    prompt:
+      "Improve the Blog Admin filtering UX with debounced search, clearer status/category filters, empty-state guidance, and sticky controls for long lists.",
+  },
+  {
+    category: "Feature",
+    title: "Add SEO Settings Drawer",
+    prompt:
+      "Add an SEO panel in Blog Admin where each post can manage meta title, meta description, canonical URL, and keywords, with validation and save support.",
+  },
+  {
+    category: "Feature",
+    title: "Add Publish Scheduler",
+    prompt:
+      "Implement post scheduling in Blog Admin so authors can choose a future publish date/time and automatically publish at that time while preserving draft and published states.",
+  },
+];
+
 export default function BlogAdmin() {
+  useAuth({
+    redirectOnUnauthenticated: true,
+    redirectPath: "/auth",
+  });
+
   const [isOpen, setIsOpen] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [search, setSearch] = useState("");
-  const [status, setStatus] = useState<"draft" | "published" | "archived">("draft");
+  const [status, setStatus] = useState<"draft" | "published" | "archived">("published");
 
   const [formData, setFormData] = useState({
     title: "",
@@ -45,7 +130,7 @@ export default function BlogAdmin() {
     tags: "",
     metaDescription: "",
     keywords: "",
-    status: "draft" as const,
+    status: "published" as const,
   });
 
   // Queries
@@ -100,7 +185,7 @@ export default function BlogAdmin() {
       tags: "",
       metaDescription: "",
       keywords: "",
-      status: "draft",
+      status: "published",
     });
     setEditingId(null);
   };
@@ -155,6 +240,15 @@ export default function BlogAdmin() {
         return "bg-gray-500";
       default:
         return "bg-gray-500";
+    }
+  };
+
+  const handlePromptCardClick = async (card: PromptCard) => {
+    try {
+      await navigator.clipboard.writeText(card.prompt);
+      toast.success("Prompt copied. Paste it in chat to build this feature.");
+    } catch {
+      toast.error("Couldn't copy prompt. Please copy it manually from the card.");
     }
   };
 
@@ -366,6 +460,55 @@ export default function BlogAdmin() {
         </div>
 
         {/* Filters */}
+        <div className="mb-8 rounded-xl border bg-card p-5 md:p-6">
+          <h2 className="text-xl font-semibold text-foreground">Ready-to-use Prompt Cards</h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Here are ready-to-use prompts for every section of the blog admin panel, organized by what you want to build or customize.
+            Click any prompt card below to instantly copy it and send it in chat.
+          </p>
+
+          <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+            {(Object.keys(categoryMeta) as PromptCategory[]).map((category) => {
+              const meta = categoryMeta[category];
+              const Icon = meta.icon;
+              return (
+                <div
+                  key={category}
+                  className="rounded-lg border bg-background px-3 py-2"
+                >
+                  <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+                    <Icon size={14} />
+                    {category}
+                  </div>
+                  <p className="mt-1 text-xs text-muted-foreground">{meta.description}</p>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            {promptCards.map((card) => (
+              <button
+                key={card.title}
+                type="button"
+                onClick={() => handlePromptCardClick(card)}
+                className="text-left rounded-lg border bg-background p-4 transition-colors hover:bg-accent"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <Badge variant="outline">{card.category}</Badge>
+                  <Copy size={14} className="text-muted-foreground" />
+                </div>
+                <h3 className="mt-3 font-medium text-foreground">{card.title}</h3>
+                <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">{card.prompt}</p>
+              </button>
+            ))}
+          </div>
+
+          <p className="mt-4 text-xs text-muted-foreground">
+            You can mix and combine prompts. For example, after adding the post editor, follow up with the SEO panel or scheduler.
+          </p>
+        </div>
+
         <div className="flex gap-4 mb-6">
           <div className="relative max-w-xs">
             <Search size={16} className="absolute left-3 top-3 text-muted-foreground" />

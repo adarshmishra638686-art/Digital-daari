@@ -4,6 +4,42 @@ import { InsertUser, users, blogPosts, BlogPost, InsertBlogPost } from "../drizz
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
+let inMemoryBlogPosts: BlogPost[] = [];
+let inMemoryBlogPostId = 1;
+
+function sortBlogPosts(posts: BlogPost[]) {
+  return [...posts].sort((a, b) => {
+    const aPublishedAt = a.publishedAt ? new Date(a.publishedAt).getTime() : 0;
+    const bPublishedAt = b.publishedAt ? new Date(b.publishedAt).getTime() : 0;
+    if (bPublishedAt !== aPublishedAt) return bPublishedAt - aPublishedAt;
+
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
+}
+
+function filterInMemoryPosts(
+  posts: BlogPost[],
+  filters?: {
+    status?: "draft" | "published" | "archived";
+    authorId?: number;
+    search?: string;
+    limit?: number;
+    offset?: number;
+  }
+) {
+  const limit = filters?.limit ?? 20;
+  const offset = filters?.offset ?? 0;
+  const search = filters?.search?.toLowerCase().trim();
+
+  const filtered = posts.filter(post => {
+    if (filters?.status && post.status !== filters.status) return false;
+    if (filters?.authorId && post.authorId !== filters.authorId) return false;
+    if (search && !post.title.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  return sortBlogPosts(filtered).slice(offset, offset + limit);
+}
 
 // Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
@@ -94,7 +130,30 @@ export async function getUserByOpenId(openId: string) {
 export async function createBlogPost(post: InsertBlogPost): Promise<BlogPost> {
   const db = await getDb();
   if (!db) {
-    throw new Error("Database not available");
+    const now = new Date();
+    const memoryPost: BlogPost = {
+      id: inMemoryBlogPostId++,
+      title: post.title,
+      slug: post.slug,
+      content: post.content,
+      excerpt: post.excerpt ?? null,
+      featuredImage: post.featuredImage ?? null,
+      tags: post.tags ?? null,
+      status: post.status ?? "draft",
+      authorId: post.authorId,
+      metaDescription: post.metaDescription ?? null,
+      keywords: post.keywords ?? null,
+      viewCount: 0,
+      createdAt: now,
+      updatedAt: now,
+      publishedAt:
+        post.status === "published"
+          ? (post.publishedAt ?? now)
+          : (post.publishedAt ?? null),
+    };
+
+    inMemoryBlogPosts.push(memoryPost);
+    return memoryPost;
   }
 
   const result = await db.insert(blogPosts).values(post);
@@ -107,7 +166,23 @@ export async function createBlogPost(post: InsertBlogPost): Promise<BlogPost> {
 export async function updateBlogPost(id: number, updates: Partial<InsertBlogPost>): Promise<BlogPost> {
   const db = await getDb();
   if (!db) {
-    throw new Error("Database not available");
+    const existing = inMemoryBlogPosts.find(post => post.id === id);
+    if (!existing) {
+      throw new Error("Blog post not found");
+    }
+
+    const updated: BlogPost = {
+      ...existing,
+      ...updates,
+      updatedAt: new Date(),
+    };
+
+    if (updated.status === "published" && !updated.publishedAt) {
+      updated.publishedAt = new Date();
+    }
+
+    inMemoryBlogPosts = inMemoryBlogPosts.map(post => (post.id === id ? updated : post));
+    return updated;
   }
 
   await db.update(blogPosts).set(updates).where(eq(blogPosts.id, id));
@@ -119,7 +194,8 @@ export async function updateBlogPost(id: number, updates: Partial<InsertBlogPost
 export async function deleteBlogPost(id: number): Promise<void> {
   const db = await getDb();
   if (!db) {
-    throw new Error("Database not available");
+    inMemoryBlogPosts = inMemoryBlogPosts.filter(post => post.id !== id);
+    return;
   }
 
   await db.delete(blogPosts).where(eq(blogPosts.id, id));
@@ -128,7 +204,7 @@ export async function deleteBlogPost(id: number): Promise<void> {
 export async function getBlogPostById(id: number): Promise<BlogPost | undefined> {
   const db = await getDb();
   if (!db) {
-    return undefined;
+    return inMemoryBlogPosts.find(post => post.id === id);
   }
 
   const result = await db.select().from(blogPosts).where(eq(blogPosts.id, id)).limit(1);
@@ -138,7 +214,7 @@ export async function getBlogPostById(id: number): Promise<BlogPost | undefined>
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
   const db = await getDb();
   if (!db) {
-    return undefined;
+    return inMemoryBlogPosts.find(post => post.slug === slug);
   }
 
   const result = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug)).limit(1);
@@ -154,7 +230,7 @@ export async function listBlogPosts(filters?: {
 }): Promise<BlogPost[]> {
   const db = await getDb();
   if (!db) {
-    return [];
+    return filterInMemoryPosts(inMemoryBlogPosts, filters);
   }
 
   const limit = filters?.limit ?? 20;

@@ -18,6 +18,7 @@ import Services from "./pages/Services";
 import CaseStudies from "./pages/CaseStudies";
 import Blog from "./pages/Blog";
 import BlogAdmin from "./pages/BlogAdmin";
+import AuthPage from "./pages/Auth";
 import Contact from "./pages/Contact";
 import { useEffect } from "react";
 
@@ -31,23 +32,27 @@ function ScrollToTop() {
 }
 function Router() {
   // make sure to consider if you need authentication for certain routes
+  const [location] = useLocation();
+  const isAdminRoute = location.startsWith("/admin");
+
   return (
     <>
       <ScrollToTop />
-      <Navbar />
+      {!isAdminRoute && <Navbar />}
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/services" component={Services} />
         <Route path="/case-studies" component={CaseStudies} />
         <Route path="/blog" component={Blog} />
+        <Route path="/auth" component={AuthPage} />
         <Route path="/admin/blog" component={BlogAdmin} />
         <Route path="/contact" component={Contact} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>
-      <Footer />
-      <WhatsAppButton />
+      {!isAdminRoute && <Footer />}
+      {!isAdminRoute && <WhatsAppButton />}
     </>
   );
 }

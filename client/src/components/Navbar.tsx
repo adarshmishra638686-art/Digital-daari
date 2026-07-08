@@ -88,11 +88,11 @@ export default function Navbar() {
               <Phone size={14} />
               <span>+91 9956138641</span>
             </a>
-            <Link href="/contact">
+            <a href="tel:+919956138641">
               <button className="shimmer-btn text-white font-bold text-sm px-5 py-2.5 rounded-lg font-['Montserrat'] tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#00AEEF]/25">
                 Free Consultation
               </button>
-            </Link>
+            </a>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -121,11 +121,11 @@ export default function Navbar() {
                 </span>
               </Link>
             ))}
-            <Link href="/contact">
+            <a href="tel:+919956138641">
               <button className="w-full mt-2 shimmer-btn text-white font-bold text-sm px-5 py-3 rounded-lg font-['Montserrat'] tracking-wide">
                 Get Free Consultation
               </button>
-            </Link>
+            </a>
           </nav>
         </div>
       )}

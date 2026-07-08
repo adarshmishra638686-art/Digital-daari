@@ -6,8 +6,9 @@ import { publicProcedure, router } from "./_core/trpc";
 import { blogRouter } from "./routers/blog";
 import { mediaRouter } from "./routers/media";
 import { categoriesRouter } from "./routers/categories";
+import { contactRouter } from "./routers/contact";
 import { z } from "zod";
-import { ENV } from "./_core/env";
+import { ENV, ENV_FLAGS } from "./_core/env";
 
 export const appRouter = router({
   // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -22,6 +23,13 @@ export const appRouter = router({
         })
       )
       .mutation(({ ctx, input }) => {
+        if (!ENV_FLAGS.isCmsAdminConfigured) {
+          return {
+            success: false,
+            message: "Admin login is not configured on the server",
+          } as const;
+        }
+
         const emailMatches =
           input.email.trim().toLowerCase() === ENV.cmsAdminEmail.toLowerCase();
         const passwordMatches = input.password === ENV.cmsAdminPassword;
@@ -37,7 +45,7 @@ export const appRouter = router({
           httpOnly: true,
           path: "/",
           sameSite: "lax",
-          secure: false,
+          secure: ENV.isProduction,
           maxAge: 1000 * 60 * 60 * 12,
         });
 
@@ -50,7 +58,7 @@ export const appRouter = router({
         httpOnly: true,
         path: "/",
         sameSite: "lax",
-        secure: false,
+        secure: ENV.isProduction,
         maxAge: -1,
       });
 
@@ -65,7 +73,7 @@ export const appRouter = router({
         httpOnly: true,
         path: "/",
         sameSite: "lax",
-        secure: false,
+        secure: ENV.isProduction,
         maxAge: -1,
       });
       return {
@@ -77,6 +85,7 @@ export const appRouter = router({
   blog: blogRouter,
   media: mediaRouter,
   categories: categoriesRouter,
+  contact: contactRouter,
 });
 
 export type AppRouter = typeof appRouter;

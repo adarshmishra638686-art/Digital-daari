@@ -48,6 +48,8 @@ export default function RichTextEditor({
 }: RichTextEditorProps) {
   const [showLinkInput, setShowLinkInput] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
+  const [showImageInput, setShowImageInput] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
   const editor = useEditor({
     extensions: [
@@ -90,26 +92,56 @@ export default function RichTextEditor({
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && onImageUpload) {
-      try {
-        const url = await onImageUpload(file);
-        editor.chain().focus().setImage({ src: url }).run();
-      } catch (error) {
-        console.error("Image upload failed:", error);
+    if (!file) return;
+
+    try {
+      let imageSrc = "";
+      if (onImageUpload) {
+        imageSrc = await onImageUpload(file);
+      } else {
+        imageSrc = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result || ""));
+          reader.onerror = () => reject(new Error("Failed to read image file"));
+          reader.readAsDataURL(file);
+        });
       }
+
+      if (imageSrc) {
+        editor.chain().focus().setImage({ src: imageSrc }).run();
+      }
+    } catch (error) {
+      console.error("Image upload failed:", error);
+    } finally {
+      e.target.value = "";
     }
   };
 
+  const handleAddImageByUrl = () => {
+    const normalized = imageUrl.trim();
+    if (!normalized) return;
+
+    editor.chain().focus().setImage({ src: normalized }).run();
+    setImageUrl("");
+    setShowImageInput(false);
+  };
+
+  const toolbarButtonClass =
+    "border-slate-600 bg-slate-800 text-slate-100 hover:bg-slate-700 hover:text-white";
+  const toolbarButtonActiveClass =
+    "border-cyan-400/60 bg-cyan-500/20 text-cyan-100 hover:bg-cyan-500/30";
+
   return (
-    <div className="border border-slate-200 rounded-lg overflow-hidden bg-white">
+    <div className="border border-slate-300 rounded-lg overflow-hidden bg-white">
       {/* Toolbar */}
-      <div className="bg-slate-50 border-b border-slate-200 p-3 flex flex-wrap gap-1">
+      <div className="bg-slate-900 border-b border-slate-700 p-3 flex flex-wrap gap-1">
         {/* Text Formatting */}
         <Button
           variant="outline"
           size="sm"
+          type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}
-          className={editor.isActive("bold") ? "bg-slate-200" : ""}
+          className={editor.isActive("bold") ? toolbarButtonActiveClass : toolbarButtonClass}
           title="Bold (Ctrl+B)"
         >
           <Bold size={16} />
@@ -118,21 +150,23 @@ export default function RichTextEditor({
         <Button
           variant="outline"
           size="sm"
+          type="button"
           onClick={() => editor.chain().focus().toggleItalic().run()}
-          className={editor.isActive("italic") ? "bg-slate-200" : ""}
+          className={editor.isActive("italic") ? toolbarButtonActiveClass : toolbarButtonClass}
           title="Italic (Ctrl+I)"
         >
           <Italic size={16} />
         </Button>
 
-        <div className="w-px bg-slate-300 mx-1" />
+        <div className="w-px bg-slate-700 mx-1" />
 
         {/* Headings */}
         <Button
           variant="outline"
           size="sm"
+          type="button"
           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-          className={editor.isActive("heading", { level: 2 }) ? "bg-slate-200" : ""}
+          className={editor.isActive("heading", { level: 2 }) ? toolbarButtonActiveClass : toolbarButtonClass}
           title="Heading 2"
         >
           <Heading2 size={16} />
@@ -141,21 +175,23 @@ export default function RichTextEditor({
         <Button
           variant="outline"
           size="sm"
+          type="button"
           onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-          className={editor.isActive("heading", { level: 3 }) ? "bg-slate-200" : ""}
+          className={editor.isActive("heading", { level: 3 }) ? toolbarButtonActiveClass : toolbarButtonClass}
           title="Heading 3"
         >
           <Heading3 size={16} />
         </Button>
 
-        <div className="w-px bg-slate-300 mx-1" />
+        <div className="w-px bg-slate-700 mx-1" />
 
         {/* Lists */}
         <Button
           variant="outline"
           size="sm"
+          type="button"
           onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={editor.isActive("bulletList") ? "bg-slate-200" : ""}
+          className={editor.isActive("bulletList") ? toolbarButtonActiveClass : toolbarButtonClass}
           title="Bullet List"
         >
           <List size={16} />
@@ -164,21 +200,23 @@ export default function RichTextEditor({
         <Button
           variant="outline"
           size="sm"
+          type="button"
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className={editor.isActive("orderedList") ? "bg-slate-200" : ""}
+          className={editor.isActive("orderedList") ? toolbarButtonActiveClass : toolbarButtonClass}
           title="Ordered List"
         >
           <ListOrdered size={16} />
         </Button>
 
-        <div className="w-px bg-slate-300 mx-1" />
+        <div className="w-px bg-slate-700 mx-1" />
 
         {/* Code & Quote */}
         <Button
           variant="outline"
           size="sm"
+          type="button"
           onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          className={editor.isActive("codeBlock") ? "bg-slate-200" : ""}
+          className={editor.isActive("codeBlock") ? toolbarButtonActiveClass : toolbarButtonClass}
           title="Code Block"
         >
           <Code size={16} />
@@ -187,29 +225,31 @@ export default function RichTextEditor({
         <Button
           variant="outline"
           size="sm"
+          type="button"
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          className={editor.isActive("blockquote") ? "bg-slate-200" : ""}
+          className={editor.isActive("blockquote") ? toolbarButtonActiveClass : toolbarButtonClass}
           title="Quote"
         >
           <Quote size={16} />
         </Button>
 
-        <div className="w-px bg-slate-300 mx-1" />
+        <div className="w-px bg-slate-700 mx-1" />
 
         {/* Link */}
         <div className="relative">
           <Button
             variant="outline"
             size="sm"
+            type="button"
             onClick={() => setShowLinkInput(!showLinkInput)}
-            className={editor.isActive("link") ? "bg-slate-200" : ""}
+            className={editor.isActive("link") ? toolbarButtonActiveClass : toolbarButtonClass}
             title="Add Link"
           >
             <LinkIcon size={16} />
           </Button>
 
           {showLinkInput && (
-            <div className="absolute top-full left-0 mt-2 bg-white border border-slate-200 rounded-lg p-2 shadow-lg z-10 w-48">
+            <div className="absolute top-full left-0 mt-2 w-56 rounded-lg border border-slate-600 bg-slate-950 p-3 shadow-2xl z-50">
               <Input
                 type="url"
                 placeholder="https://example.com"
@@ -219,17 +259,19 @@ export default function RichTextEditor({
                   if (e.key === "Enter") handleAddLink();
                   if (e.key === "Escape") setShowLinkInput(false);
                 }}
-                className="mb-2 text-sm"
+                autoFocus
+                className="mb-2 h-9 border-slate-700 bg-slate-900 text-slate-100 placeholder:text-slate-400 text-sm"
               />
               <div className="flex gap-2">
-                <Button size="sm" onClick={handleAddLink} className="flex-1">
+                <Button size="sm" type="button" onClick={handleAddLink} className="flex-1 bg-cyan-500 text-slate-950 hover:bg-cyan-400">
                   Add
                 </Button>
                 <Button
                   size="sm"
                   variant="outline"
+                  type="button"
                   onClick={() => setShowLinkInput(false)}
-                  className="flex-1"
+                  className="flex-1 border-slate-700 bg-slate-900 text-slate-100 hover:bg-slate-800"
                 >
                   Cancel
                 </Button>
@@ -239,11 +281,53 @@ export default function RichTextEditor({
         </div>
 
         {/* Image */}
+        <div className="relative">
+          <Button
+            variant="outline"
+            size="sm"
+            type="button"
+            title="Embed image by URL"
+            onClick={() => setShowImageInput(!showImageInput)}
+            className={toolbarButtonClass}
+          >
+            <ImageIcon size={16} />
+          </Button>
+
+          {showImageInput && (
+            <div className="absolute top-full left-0 mt-2 w-64 rounded-lg border border-slate-600 bg-slate-950 p-3 shadow-2xl z-50">
+              <Input
+                type="url"
+                placeholder="https://example.com/image.jpg"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleAddImageByUrl();
+                  if (e.key === "Escape") setShowImageInput(false);
+                }}
+                autoFocus
+                className="mb-2 h-9 border-slate-700 bg-slate-900 text-slate-100 placeholder:text-slate-400 text-sm"
+              />
+              <div className="flex gap-2">
+                <Button size="sm" type="button" onClick={handleAddImageByUrl} className="flex-1 bg-cyan-500 text-slate-950 hover:bg-cyan-400">
+                  Embed
+                </Button>
+                <Button
+                  size="sm"
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowImageInput(false)}
+                  className="flex-1 border-slate-700 bg-slate-900 text-slate-100 hover:bg-slate-800"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+
         <label className="cursor-pointer">
-          <Button variant="outline" size="sm" asChild title="Add Image">
-            <span>
-              <ImageIcon size={16} />
-            </span>
+          <Button variant="outline" size="sm" type="button" asChild title="Upload Image" className={toolbarButtonClass}>
+            <span>Upload</span>
           </Button>
           <input
             type="file"
@@ -253,14 +337,16 @@ export default function RichTextEditor({
           />
         </label>
 
-        <div className="w-px bg-slate-300 mx-1" />
+        <div className="w-px bg-slate-700 mx-1" />
 
         {/* Undo/Redo */}
         <Button
           variant="outline"
           size="sm"
+          type="button"
           onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().undo()}
+          className={toolbarButtonClass}
           title="Undo"
         >
           <Undo2 size={16} />
@@ -269,8 +355,10 @@ export default function RichTextEditor({
         <Button
           variant="outline"
           size="sm"
+          type="button"
           onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().redo()}
+          className={toolbarButtonClass}
           title="Redo"
         >
           <Redo2 size={16} />
@@ -280,7 +368,8 @@ export default function RichTextEditor({
       {/* Editor */}
       <EditorContent
         editor={editor}
-        className="prose prose-sm max-w-none p-4 min-h-96 focus:outline-none"
+        data-placeholder={placeholder}
+        className="prose prose-sm max-w-none p-4 min-h-96 text-slate-900 bg-white focus:outline-none"
       />
     </div>
   );

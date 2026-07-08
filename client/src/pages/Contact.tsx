@@ -5,6 +5,7 @@
 
 import { useState } from "react";
 import { Phone, Mail, MapPin, MessageCircle, Clock, CheckCircle, ArrowRight, Send } from "lucide-react";
+import { trpc } from "@/lib/trpc";
 
 const services = [
   "Search Engine Optimization (SEO)",
@@ -50,13 +51,20 @@ export default function Contact() {
   const [loading, setLoading] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
+  const submitLeadMutation = trpc.contact.submit.useMutation();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate form submission
-    await new Promise((r) => setTimeout(r, 1500));
-    setLoading(false);
-    setSubmitted(true);
+
+    try {
+      await submitLeadMutation.mutateAsync(formData);
+      setSubmitted(true);
+    } catch (error) {
+      console.error("Failed to submit contact lead:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -199,6 +207,34 @@ export default function Contact() {
                       <MessageCircle size={16} />
                       Also reach us on WhatsApp
                     </a>
+
+                    <div className="mt-8 mx-auto max-w-2xl rounded-xl border border-[rgba(0,174,239,0.18)] bg-[#06091A] p-5 text-left">
+                      <h4 className="mb-4 text-lg font-black font-['Montserrat'] text-white">
+                        Submitted Details
+                      </h4>
+                      <div className="grid gap-4 md:grid-cols-2 text-sm font-['DM_Sans']">
+                        <div>
+                          <p className="text-slate-500 mb-1">Full Name</p>
+                          <p className="text-white font-semibold">{formData.name || "-"}</p>
+                        </div>
+                        <div>
+                          <p className="text-slate-500 mb-1">Phone Number</p>
+                          <p className="text-white font-semibold">{formData.phone || "-"}</p>
+                        </div>
+                        <div>
+                          <p className="text-slate-500 mb-1">Email Address</p>
+                          <p className="text-white font-semibold break-all">{formData.email || "-"}</p>
+                        </div>
+                        <div>
+                          <p className="text-slate-500 mb-1">Service Interested In</p>
+                          <p className="text-white font-semibold">{formData.service || "-"}</p>
+                        </div>
+                        <div className="md:col-span-2">
+                          <p className="text-slate-500 mb-1">Message</p>
+                          <p className="text-white font-semibold whitespace-pre-wrap">{formData.message || "-"}</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 ) : (
                   <>

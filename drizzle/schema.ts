@@ -33,6 +33,8 @@ export const blogPosts = mysqlTable("blog_posts", {
   id: int("id").autoincrement().primaryKey(),
   /** Post title */
   title: varchar("title", { length: 255 }).notNull(),
+  /** SEO title override */
+  metaTitle: varchar("metaTitle", { length: 70 }),
   /** URL-friendly slug for SEO */
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   /** Post content (markdown or HTML) */
@@ -43,6 +45,8 @@ export const blogPosts = mysqlTable("blog_posts", {
   featuredImage: varchar("featuredImage", { length: 500 }),
   /** Comma-separated tags for categorization */
   tags: text("tags"),
+  /** Comma-separated structured data schema types */
+  schemaTypes: text("schemaTypes"),
   /** Publishing status: draft, published, or archived */
   status: mysqlEnum("status", ["draft", "published", "archived"]).default("draft").notNull(),
   /** Author (user who created the post) */
@@ -51,6 +55,8 @@ export const blogPosts = mysqlTable("blog_posts", {
   metaDescription: varchar("metaDescription", { length: 160 }),
   /** SEO keywords */
   keywords: text("keywords"),
+  /** Canonical URL */
+  canonicalUrl: varchar("canonicalUrl", { length: 500 }),
   /** Post view count */
   viewCount: int("viewCount").default(0).notNull(),
   /** Creation timestamp */
@@ -112,6 +118,24 @@ export const blogSchedule = mysqlTable("blog_schedule", {
 
 export type BlogSchedule = typeof blogSchedule.$inferSelect;
 export type InsertBlogSchedule = typeof blogSchedule.$inferInsert;
+
+/**
+ * Contact leads captured from the consultation form.
+ */
+export const contactLeads = mysqlTable("contact_leads", {
+  id: int("id").autoincrement().primaryKey(),
+  name: text("name").notNull(),
+  phone: varchar("phone", { length: 32 }).notNull(),
+  email: varchar("email", { length: 320 }).notNull(),
+  service: varchar("service", { length: 120 }).notNull(),
+  message: text("message"),
+  status: mysqlEnum("status", ["new", "contacted", "closed"]).default("new").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ContactLead = typeof contactLeads.$inferSelect;
+export type InsertContactLead = typeof contactLeads.$inferInsert;
 
 /**
  * Blog categories for organizing posts.

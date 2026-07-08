@@ -13,13 +13,16 @@ import { TRPCError } from "@trpc/server";
 
 const createPostSchema = z.object({
   title: z.string().min(1, "Title is required"),
+  metaTitle: z.string().max(70).optional(),
   slug: z.string().min(1, "Slug is required"),
   content: z.string().min(1, "Content is required"),
   excerpt: z.string().optional(),
   featuredImage: z.string().optional(),
   tags: z.string().optional(),
+  schemaTypes: z.string().optional(),
   metaDescription: z.string().optional(),
   keywords: z.string().optional(),
+  canonicalUrl: z.string().url().optional(),
   status: z.enum(["draft", "published", "archived"]).default("draft"),
   publishedAt: z.date().optional(),
 });

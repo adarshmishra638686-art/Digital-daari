@@ -29,6 +29,27 @@
       "when": 1776933962893,
       "tag": "0003_aromatic_moon_knight",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1777248000000,
+      "tag": "0004_wise_seo_fields",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1777420800000,
+      "tag": "0005_multiple_schema_options",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1777424400000,
+      "tag": "0006_contact_leads",
+      "breakpoints": true
     }
   ]
 }

@@ -12,11 +12,13 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
+import { RouteSeo } from "./components/Seo";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import CaseStudies from "./pages/CaseStudies";
-import Blog from "./pages/Blog";
+import BlogNew from "./pages/BlogNew";
+import BlogPost from "./pages/BlogPost";
 import BlogAdmin from "./pages/BlogAdmin";
 import AuthPage from "./pages/Auth";
 import Contact from "./pages/Contact";
@@ -38,13 +40,15 @@ function Router() {
   return (
     <>
       <ScrollToTop />
+      <RouteSeo />
       {!isAdminRoute && <Navbar />}
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/services" component={Services} />
         <Route path="/case-studies" component={CaseStudies} />
-        <Route path="/blog" component={Blog} />
+        <Route path="/blog/:slug" component={BlogPost} />
+        <Route path="/blog" component={BlogNew} />
         <Route path="/auth" component={AuthPage} />
         <Route path="/admin/blog" component={BlogAdmin} />
         <Route path="/contact" component={Contact} />

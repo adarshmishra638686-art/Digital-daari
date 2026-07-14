@@ -40,6 +40,12 @@ export const appRouter = router({
             message: "Invalid admin email or password",
           } as const;
         }
+        console.log({
+  envEmail: ENV.cmsAdminEmail,
+  inputEmail: input.email,
+  emailMatches,
+  passwordMatches,
+});
 
         ctx.res.cookie(CMS_ADMIN_COOKIE_NAME, ENV.cmsAdminPassword, {
           httpOnly: true,

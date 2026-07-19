@@ -23,41 +23,48 @@ export const appRouter = router({
         })
       )
       .mutation(({ ctx, input }) => {
-        if (!ENV_FLAGS.isCmsAdminConfigured) {
+        try {
+          console.log("[adminLogin] Started with input:", input);
+          console.log("[adminLogin] ENV.cmsAdminEmail:", ENV.cmsAdminEmail);
+          console.log("[adminLogin] ENV_FLAGS:", ENV_FLAGS);
+          
+          if (!ENV_FLAGS.isCmsAdminConfigured) {
+            console.log("[adminLogin] Admin login not configured");
+            return {
+              success: false,
+              message: "Admin login is not configured on the server",
+            } as const;
+          }
+
+          const emailMatches =
+            input.email.trim().toLowerCase() === ENV.cmsAdminEmail.trim().toLowerCase();
+          const passwordMatches = input.password === ENV.cmsAdminPassword.trim();
+
+          console.log("[adminLogin] emailMatches:", emailMatches, "passwordMatches:", passwordMatches);
+
+          if (!emailMatches || !passwordMatches) {
+            return {
+              success: false,
+              message: "Invalid admin email or password",
+            } as const;
+          }
+
+          ctx.res.cookie(CMS_ADMIN_COOKIE_NAME, ENV.cmsAdminPassword, {
+            httpOnly: true,
+            path: "/",
+            sameSite: "lax",
+            secure: ENV.isProduction,
+            maxAge: 1000 * 60 * 60 * 12,
+          });
+
+          console.log("[adminLogin] Success");
           return {
-            success: false,
-            message: "Admin login is not configured on the server",
+            success: true,
           } as const;
+        } catch (error) {
+          console.error("[adminLogin] Caught exception:", error);
+          throw error;
         }
-
-        const emailMatches =
-          input.email.trim().toLowerCase() === ENV.cmsAdminEmail.toLowerCase();
-        const passwordMatches = input.password === ENV.cmsAdminPassword;
-
-        if (!emailMatches || !passwordMatches) {
-          return {
-            success: false,
-            message: "Invalid admin email or password",
-          } as const;
-        }
-        console.log({
-  envEmail: ENV.cmsAdminEmail,
-  inputEmail: input.email,
-  emailMatches,
-  passwordMatches,
-});
-
-        ctx.res.cookie(CMS_ADMIN_COOKIE_NAME, ENV.cmsAdminPassword, {
-          httpOnly: true,
-          path: "/",
-          sameSite: "lax",
-          secure: ENV.isProduction,
-          maxAge: 1000 * 60 * 60 * 12,
-        });
-
-        return {
-          success: true,
-        } as const;
       }),
     adminLogout: publicProcedure.mutation(({ ctx }) => {
       ctx.res.clearCookie(CMS_ADMIN_COOKIE_NAME, {

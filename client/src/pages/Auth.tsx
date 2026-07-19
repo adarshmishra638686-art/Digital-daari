@@ -22,8 +22,9 @@ export default function AuthPage() {
       toast.success("Admin login successful");
       setLocation("/admin/blog");
     },
-    onError: () => {
-      toast.error("Login failed. Please try again.");
+    onError: (error) => {
+      console.error("Login mutation error:", error);
+      toast.error(`Login failed: ${error.message}`);
     },
   });
 

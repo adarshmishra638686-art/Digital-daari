@@ -103,7 +103,7 @@ export default function Contact() {
             <div className="space-y-6">
               {/* Quick contact cards */}
               <a
-                href="tel:+919956138641"
+                href="tel:+91989929308"
                 className="block card-glow rounded-xl p-5 bg-[#0D1230] group"
               >
                 <div className="flex items-center gap-4">
@@ -112,7 +112,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-slate-400 text-xs font-['DM_Sans'] mb-0.5">Call Us Directly</p>
-                    <p className="text-white font-bold font-['Montserrat']">+91 9956138641</p>
+                    <p className="text-white font-bold font-['Montserrat']">+91 98999 29308</p>
                     <p className="text-slate-500 text-xs font-['DM_Sans']">Mon-Sat, 9am-7pm IST</p>
                   </div>
                 </div>
@@ -137,7 +137,7 @@ export default function Contact() {
               </a>
 
               <a
-                href="mailto:hello@digitaldaari.com"
+                href="mailto:info@digitaldaari.com"
                 className="block card-glow rounded-xl p-5 bg-[#0D1230]"
               >
                 <div className="flex items-center gap-4">
@@ -146,7 +146,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-slate-400 text-xs font-['DM_Sans'] mb-0.5">Email Us</p>
-                    <p className="text-white font-bold font-['Montserrat'] text-sm">hello@digitaldaari.com</p>
+                    <p className="text-white font-bold font-['Montserrat'] text-sm">info@digitaldaari.com</p>
                     <p className="text-slate-500 text-xs font-['DM_Sans']">We reply within 2 hours</p>
                   </div>
                 </div>

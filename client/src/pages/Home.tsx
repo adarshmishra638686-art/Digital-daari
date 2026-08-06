@@ -171,7 +171,7 @@ export default function Home() {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <a href="tel:+919956138641">
+              <a href="tel:+91989929308">
                 <button className="shimmer-btn text-white font-bold text-base px-8 py-4 rounded-xl font-['Montserrat'] tracking-wide hover:scale-105 hover:shadow-xl hover:shadow-[#00AEEF]/30 transition-all duration-300 flex items-center gap-2">
                   Get Free Consultation
                   <ArrowRight size={18} />

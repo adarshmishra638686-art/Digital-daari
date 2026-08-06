@@ -103,7 +103,7 @@ export default function Contact() {
             <div className="space-y-6">
               {/* Quick contact cards */}
               <a
-                href="tel:+91989929308"
+                href="tel:+919899929308"
                 className="block card-glow rounded-xl p-5 bg-[#0D1230] group"
               >
                 <div className="flex items-center gap-4">
@@ -119,7 +119,7 @@ export default function Contact() {
               </a>
 
               <a
-                href="https://wa.link/qgr50h"
+                href="https://wa.me/919899929308"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block rounded-xl p-5 bg-[#25D366]/10 border border-[#25D366]/30 hover:bg-[#25D366]/20 transition-colors group"
@@ -199,7 +199,7 @@ export default function Contact() {
                       Your message has been received. Our team will contact you within 2 hours during business hours.
                     </p>
                     <a
-                      href="https://wa.link/qgr50h"
+                      href="https://wa.me/919899929308"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 bg-[#25D366] text-white font-bold text-sm px-6 py-3 rounded-xl font-['Montserrat'] hover:bg-[#22C55E] transition-colors"

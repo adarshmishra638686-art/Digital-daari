@@ -107,7 +107,7 @@ export default function Footer() {
             </h4>
             <ul className="space-y-4">
               <li>
-                <a href="tel:+91989929308" className="flex items-start gap-3 text-slate-400 hover:text-[#00AEEF] transition-colors group">
+                <a href="tel:+919899929308" className="flex items-start gap-3 text-slate-400 hover:text-[#00AEEF] transition-colors group">
                   <div className="service-icon-wrap w-9 h-9 mt-0.5 flex-shrink-0">
                     <Phone size={14} className="text-[#00AEEF]" />
                   </div>

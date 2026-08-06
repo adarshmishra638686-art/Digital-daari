@@ -226,13 +226,13 @@ export default function About() {
             Ready to take your business to the next level? Book a free strategy call and let's map out your growth plan.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="tel:+91989929308">
+            <a href="tel:+919899929308">
               <button className="shimmer-btn text-white font-black text-base px-8 py-4 rounded-xl font-['Montserrat'] tracking-wide hover:scale-105 transition-all duration-300 flex items-center gap-2">
                 Get Free Consultation <ArrowRight size={18} />
               </button>
             </a>
             <a
-              href="https://wa.link/qgr50h"
+              href="https://wa.me/919899929308"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#25D366] text-white font-black text-base px-8 py-4 rounded-xl font-['Montserrat'] tracking-wide hover:bg-[#22C55E] transition-all duration-300"

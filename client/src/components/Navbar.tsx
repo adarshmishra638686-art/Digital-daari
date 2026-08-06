@@ -82,13 +82,13 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
             <a
-              href="tel:+91989929308"
+              href="tel:+919899929308"
               className="flex items-center gap-2 text-sm text-slate-300 hover:text-[#00AEEF] transition-colors font-['DM_Sans']"
             >
               <Phone size={14} />
               <span>+91 98999 29308</span>
             </a>
-            <a href="tel:+91989929308">
+            <a href="tel:+919899929308">
               <button className="shimmer-btn text-white font-bold text-sm px-5 py-2.5 rounded-lg font-['Montserrat'] tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#00AEEF]/25">
                 Free Consultation
               </button>
@@ -121,7 +121,7 @@ export default function Navbar() {
                 </span>
               </Link>
             ))}
-            <a href="tel:+91989929308">
+            <a href="tel:+919899929308">
               <button className="w-full mt-2 shimmer-btn text-white font-bold text-sm px-5 py-3 rounded-lg font-['Montserrat'] tracking-wide">
                 Get Free Consultation
               </button>

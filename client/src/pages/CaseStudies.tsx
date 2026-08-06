@@ -306,7 +306,7 @@ export default function CaseStudies() {
               </button>
             </Link>
             <a
-              href="https://wa.link/qgr50h"
+              href="https://wa.me/919899929308"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#25D366] text-white font-black text-base px-8 py-4 rounded-xl font-['Montserrat'] tracking-wide hover:bg-[#22C55E] transition-all duration-300"

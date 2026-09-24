@@ -8,7 +8,7 @@ type SeoConfig = {
 };
 
 const defaultSeo: SeoConfig = {
-  title: " Digital Marketing & Creative Agency",
+  title: " Digital Marketing Agency",
   description:
     "Digitaldaari is a premium digital marketing and creative agency offering SEO, Local SEO, Website Design, Social Media Marketing, PPC, Graphic Design, Video Editing, Photoshoots and Videoshoots.",
   keywords:
@@ -18,7 +18,7 @@ const defaultSeo: SeoConfig = {
 function getSeoForPath(pathname: string): SeoConfig {
   if (pathname === "/") {
     return {
-      title: "Digital Marketing & Creative Agency",
+      title: "Digital Marketing Agency",
       description:
         "Grow your business with SEO, local SEO, website design, social media marketing, PPC, and creative content services from Digitaldaari.",
       keywords:

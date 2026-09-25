@@ -40,6 +40,7 @@ if [ ! -f .env ]; then
   cp .env.example .env
   echo "Created .env from .env.example"
   echo "Update .env values, then run: bash scripts/deploy-vps.sh"
+  exit 0
 fi
 
 echo "[4/9] Writing nginx site config..."
